@@ -1,24 +1,5 @@
 'use strict'
 
-	/*(var setZero = 0
-	function getPlayerInfo(){
-		if(playerOneArray === playerOneArray){
-			var playerTwoArray = playerOneArray;
-		}
-		
-		var playerOneArray = [];
-		var playerTwoArray = [];
-		var firstname = prompt("please enter first name here.");
-		playerOneArray.push(firstname);
-		var lastName = prompt("Now enter your last name.");
-		playerOneArray.push(lastName);
-		setZero += 1;
-		
-			if(setZero === 1 || setZero === 2){
-				setPlayerInfo(rollRandomDie, playerOneArray, playerTwoArray);
-			}
-	}*/
-
 	function getPlayerOneInfo(){
 		
 		var playerOneArray = [];
@@ -100,13 +81,18 @@
 	function getPlayerOneNewHand(rollRandomDiePlayerOne, playersHand){
 		var currentScore = playersHand[0].hand;
 		var playerOneNewHand = rollRandomDiePlayerOne + currentScore;
-			if ( playerOneNewHand > 31) {
-				console.log(playersHand[0].playerFirstName + ' Your hand busted, you lose');
+		playersHand[0].hand = playerOneNewHand;
+			/*if ( playerOneNewHand > 31) {
+				console.log(playersHand[0].playerFirstName + ': your hand busted, you lose');
+				
 				document.getElementById('hideButtonHitOne').style.visibility = 'hidden';
+				document.getElementById('hideButtonPlayerOneStand').style.visibility = 'hidden';
+				document.getElementById('hideButtonHitTwo').style.visibility = 'hidden';
+				document.getElementById('hideButtonPlayerTwoStand').style.visibility = 'hidden';
 			}
 			else{
 				playersHand[0].hand = playerOneNewHand;
-			}
+			}*/
 		return playerOneNewHand;
 	}
 
@@ -114,31 +100,70 @@
 		var currentScore = playersHand[1].hand;
 		var playerTwoNewHand = rollRandomDiePlayerTwo + currentScore;
 		playersHand[1].hand = playerTwoNewHand;
-		if ( playerTwoNewHand > 31) {
-				console.log(playersHand[1].playerFirstName + ' your hand busted, you lose');
-				document.getElementById('hideButtonHitTwo').style.visibility = 'hidden';
-			}
-			else{
-				playersHand[1].hand = playerTwoNewHand;
-			}
+		//if ( playerTwoNewHand > 31) {
+		//		console.log(playersHand[1].playerFirstName + ': your hand busted, you lose');
+				
+		//		document.getElementById('hideButtonHitTwo').style.visibility = 'hidden';
+		//		document.getElementById('hideButtonPlayerTwoStand').style.visibility = 'hidden';
+		//		document.getElementById('hideButtonHitOne').style.visibility = 'hidden';
+		//		document.getElementById('hideButtonPlayerOneStand').style.visibility = 'hidden';
+		//	}
+		//	else{
+		//		playersHand[1].hand = playerTwoNewHand;
+		//	}
 		return playerTwoNewHand;
 	}
-/*
-	function checkPlayerOneBust(playersHand){
-		var checkBust = playersHand[0].hand;
-			if (checkBust > 31) {
-				console.log('Your hand busted, you lose');
-			}
-	}*/	
 
-	/*function checkPlayerTwoBust(playersHand){
-		var checkBust = playersHand[1].hand;
-			if (checkBust > 31) {
-				console.log('Your hand busted, you lose');
+	function getPlayerOneStand(playersHand){
+		console.log(playersHand[0].playerFirstName + ': you stand with a hand of ' + playersHand[0].hand);
+		document.getElementById('hideButtonHitOne').style.visibility = 'hidden';
+	}
 
+	function getPlayerTwoStand(playersHand){
+		console.log(playersHand[1].playerFirstName + ': you stand with a hand of ' + playersHand[1].hand);
+		document.getElementById('hideButtonHitTwo').style.visibility = 'hidden';
+	}
+
+	function declareBustWinPlayerOne(rollRandomDiePlayerOne, playersHand){
+		var currentScore = playersHand[0].hand;
+			if ( currentScore > 31) {
+				console.log(playersHand[1].playerFirstName + ': You Win!');
 			}
 	}
-*/
+
+	function declareBustWinPlayerTwo(rollRandomDiePlayerTwo, playersHand){
+		var currentScore = playersHand[1].hand;
+			if ( currentScore > 31) {
+				console.log(playersHand[0].playerFirstName + ': You Win!');
+			}
+	}
+
+	function checkBustPlayerOne(playersHand){
+		var playerOneNewHand = playersHand[0].hand;
+			if ( playerOneNewHand > 31) {
+				console.log(playersHand[0].playerFirstName + ': your hand busted, you lose');
+				
+				document.getElementById('hideButtonHitOne').style.visibility = 'hidden';
+				document.getElementById('hideButtonPlayerOneStand').style.visibility = 'hidden';
+				document.getElementById('hideButtonHitTwo').style.visibility = 'hidden';
+				document.getElementById('hideButtonPlayerTwoStand').style.visibility = 'hidden';
+			}
+	}
+
+	function checkBustPlayerTwo(playersHand){
+		var playerTwoNewHand = playersHand[1].hand;
+			if ( playerTwoNewHand > 31) {
+				console.log(playersHand[1].playerFirstName + ': your hand busted, you lose');
+				
+				document.getElementById('hideButtonHitOne').style.visibility = 'hidden';
+				document.getElementById('hideButtonPlayerOneStand').style.visibility = 'hidden';
+				document.getElementById('hideButtonHitTwo').style.visibility = 'hidden';
+				document.getElementById('hideButtonPlayerTwoStand').style.visibility = 'hidden';
+			}
+	}
+
+
+
 
 		//CALLING FUNCTIONS
 
@@ -149,6 +174,9 @@
 		var randomDie = chooseRandomDie(diceArray);
 		var rollRandomDiePlayerOne = getRolledRandomDiePlayerOne(randomDie, playersHand);
 		getPlayerOneNewHand(rollRandomDiePlayerOne, playersHand);
+		console.log(playersHand[0].playerFirstName + ": you have a total of " + playersHand[0].hand);
+		checkBustPlayerOne(playersHand);
+		declareBustWinPlayerOne(rollRandomDiePlayerOne, playersHand);
 		return rollRandomDiePlayerOne;
 	}
 
@@ -157,6 +185,9 @@
 		var randomDie = chooseRandomDie(diceArray);
 		var rollRandomDiePlayerTwo = getRolledRandomDiePlayerTwo(randomDie, playersHand);
 		getPlayerTwoNewHand(rollRandomDiePlayerTwo, playersHand);
+		console.log(playersHand[1].playerFirstName + ": you have a total of " + playersHand[1].hand);
+		checkBustPlayerTwo(playersHand);
+		declareBustWinPlayerTwo(rollRandomDiePlayerTwo, playersHand);
 		return rollRandomDiePlayerTwo;		
 	}	
 
@@ -169,7 +200,7 @@
 		return playersHand
 	}
 
-	function callPlayerOneScore(rollRandomDiePlayerOne, playersHand){
+	/*function callPlayerOneScore(rollRandomDiePlayerOne, playersHand){
 		var playerOneNewHand = getPlayerOneNewHand(rollRandomDiePlayerOne, playersHand);
 		return playerOneNewHand;
 	}
@@ -178,10 +209,4 @@
 		var playerTwoNewHand = getPlayerTwoNewHand(rollRandomDiePlayerTwo, playersHand);
 		return playerTwoNewHand;
 	}
-		//var randomDiePlayerOne = callRolledDieFunctionsPlayerOne();
-		//var randomDiePlayerTwo = callRolledDieFunctionsPlayerTwo();
-		//var playersHand = callPlayerSetUp();
-		//callPlayerOneScore(randomDiePlayerOne, playersHand);
-		//callPlayerTwoScore(randomDiePlayerTwo, playersHand);
-		//console.log(playersHand[1].hand);*/
-
+*/
