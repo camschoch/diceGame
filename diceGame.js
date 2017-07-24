@@ -57,25 +57,26 @@
 	}
 
 	function getRolledRandomDiePlayerOne(randomDie, playersHand){
-		var rollRandomDie = Math.round(Math.random() * randomDie);
-			if(rollRandomDie !== 0){
-				console.log(playersHand[0].playerFirstName + ": rolled the " + randomDie + " sided die and it landed on " + rollRandomDie + ".");
-				return rollRandomDie;
-			}
-			else{
-				getRolledRandomDiePlayerOne(randomDie, playersHand);
-			}		
+		var rollRandomDie = Math.floor(Math.random() * randomDie);
+		while(rollRandomDie === 0)
+		{
+			rollRandomDie = Math.floor(Math.random() * randomDie);
+		}
+
+		console.log(playersHand[0].playerFirstName + ": rolled the " + randomDie + " sided die and it landed on " + rollRandomDie + ".");
+		return rollRandomDie;
+					
 	}
 
 	function getRolledRandomDiePlayerTwo(randomDie, playersHand){
-		var rollRandomDie = Math.round(Math.random() * randomDie);
-			if(rollRandomDie !== 0){
-				console.log(playersHand[1].playerFirstName + ": rolled the " + randomDie + " sided die and it landed on " + rollRandomDie + ".");
-				return rollRandomDie;
-			}
-			else{
-				getRolledRandomDiePlayerTwo(randomDie, playersHand);
-			}
+		var rollRandomDie = Math.floor(Math.random() * randomDie);
+		while(rollRandomDie === 0)
+		{
+			rollRandomDie = Math.floor(Math.random() * randomDie);
+		}
+		
+		console.log(playersHand[1].playerFirstName + ": rolled the " + randomDie + " sided die and it landed on " + rollRandomDie + ".");
+		return rollRandomDie;
 	}
 
 	function getPlayerOneNewHand(rollRandomDiePlayerOne, playersHand){
@@ -116,12 +117,16 @@
 
 	function getPlayerOneStand(playersHand){
 		console.log(playersHand[0].playerFirstName + ': you stand with a hand of ' + playersHand[0].hand);
+		compareHands(playersHand);
 		document.getElementById('hideButtonHitOne').style.visibility = 'hidden';
+		document.getElementById('hideButtonPlayerOneStand').style.visibility = 'hidden';
 	}
 
 	function getPlayerTwoStand(playersHand){
 		console.log(playersHand[1].playerFirstName + ': you stand with a hand of ' + playersHand[1].hand);
+		compareHands(playersHand);
 		document.getElementById('hideButtonHitTwo').style.visibility = 'hidden';
+		document.getElementById('hideButtonPlayerTwoStand').style.visibility = 'hidden';
 	}
 
 	function declareBustWinPlayerOne(rollRandomDiePlayerOne, playersHand){
@@ -162,7 +167,24 @@
 			}
 	}
 
+	function compareHands(playersHand){
+		if(playersHand[0].hand > playersHand[1].hand){
+			console.log(playersHand[0].playerFirstName + ': you have a higher hand, You Win!');
+			
+		}
 
+		else if(playersHand[1].hand > playersHand[0].hand){
+			console.log(playersHand[1].playerFirstName + ": you have a higher hand, You Win!")
+		}
+
+		else if(playersHand[0].hand < playersHand[1].hand){
+			console.log(playersHand[0].playerFirstName + ': you have a smaller hand, you lose.');
+		}
+
+		else if(playersHand[1].hand < playersHand[0].hand){
+			console.log(playersHand[1].playerFirstName + ': you have a smaller hand, you lose.');
+		}
+	}
 
 
 		//CALLING FUNCTIONS
@@ -209,4 +231,6 @@
 		var playerTwoNewHand = getPlayerTwoNewHand(rollRandomDiePlayerTwo, playersHand);
 		return playerTwoNewHand;
 	}
+		}
+		}
 */
